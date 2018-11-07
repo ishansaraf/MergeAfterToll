@@ -1,15 +1,17 @@
-import { Vehicle } from "./vehcile";
+import { Vehicle } from "./vehicle";
 
 export class World {
   public ref;
-  private vehicles: Vehicle[] = [];
+  public vehicles: Vehicle[] = [];
+  public targetXs: number[] = [];
+  public targetYs: number[] = [];
 
   constructor(ref) {
     this.ref = ref;
     // TODO: Create Tollbooths and Targets appropriately, maintain list of targets
   }
 
-  addVehicle(vehicle: Vehicle) {
+  addVehicle(vehicle: Vehicle): void {
     this.vehicles.push(vehicle);
   }
 
@@ -17,11 +19,11 @@ export class World {
     return this.vehicles;
   }
 
-  render() {
+  render(): void {
     this.vehicles.forEach(vehicle => vehicle.render());
   }
 
-  update() {
+  update(): void {
     this.vehicles.forEach(vehicle => vehicle.update());
   }
 }

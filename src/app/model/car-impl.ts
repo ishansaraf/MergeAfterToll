@@ -1,28 +1,30 @@
 import { Vehicle } from "./vehicle";
 import { World } from "./world";
+import { Strategy } from "./strategy";
 
 export class Car implements Vehicle {
   x: number;
   y: number;
-  targetX: number;
-  targetY: number;
   size: number;
   ref;
+  world: World;
+  strategy: Strategy;
 
   constructor(
     x: number,
     y: number,
     size: number,
-    targetX: number,
-    targetY: number,
-    ref
+    ref,
+    strategy: Strategy,
+    world: World
   ) {
     this.size = size;
     this.x = x;
     this.y = y;
-    this.targetX = targetX;
-    this.targetY = targetY;
     this.ref = ref;
+    this.world = world;
+    this.strategy = strategy;
+    this.strategy.initialize(this, this.world);
   }
 
   getX(): number {
@@ -33,19 +35,15 @@ export class Car implements Vehicle {
     return this.y;
   }
 
-  getTargetX(): number {
-    return this.targetX;
-  }
-
-  getTargetY(): number {
-    return this.targetY;
-  }
-
   getSize(): number {
     return this.size;
   }
 
   render(): void {
     this.ref.attr("cx", this.x).attr("cy", this.y);
+  }
+
+  update(): void {
+    this.strategy.update();
   }
 }

@@ -1,26 +1,61 @@
-import { Car } from "car-impl";
-import { World } from "../world";
+import { Car } from "../car-impl";
 import { Vehicle } from "../vehicle";
+import { Strategy } from "../strategy";
 
-export class GoToLane {
-  private currX = this.car.getX();
-  private currY = this.car.getY();
-  private targetX = this.car.getTargetX();
-  private targetY = this.car.getTargetY();
+export class BasicStrategy extends Strategy {
+  update() {
+    const currX = this.car.getX();
+    const currY = this.car.getY();
 
-  updatePosition() {
+    // Retrieve current closest target
+    const targetIndex = this.getClosestTargetIndex(currX, currY);
+    const targetX = this.world.targetXs[targetIndex];
+    const targetY = this.world.targetYs[targetIndex];
+
     // Update car's x value incrementally in relation to the target
-    if (this.targetX - this.currX > 0) {
-      this.car.x = this.currX + 1;
-    } else if (this.targetX - this.currX < 0) {
-      this.car.x = this.currX - 1;
+    if (targetX - currX > 0) {
+      this.car.x = currX + 1;
+    } else if (targetX - currX < 0) {
+      this.car.x = currX - 1;
     }
 
-    if (this.targetY - this.currY > 0) {
-      // Car already past merging point, unrender
+    if (targetY - currY > 0) {
+      // TODO: Car already past merging point, unrender
       this.car.ref.remove();
     } else {
-      this.car.y = this.currY - 1;
+      this.car.y = currY - 1;
     }
+  }
+
+  private distance(x1: number, x2: number, y1: number, y2: number): number {
+    const x = Math.pow(x1 - x2, 2);
+    const y = Math.pow(y1 - y2, 2);
+    return Math.sqrt(x + y);
+  }
+
+  private getClosestTargetIndex(currX, currY): number {
+    var minDistance = this.distance(
+      currX,
+      this.world.targetXs[0],
+      currY,
+      this.world.targetYs[0]
+    );
+    var selectedTargetIndex = 0;
+
+    for (var i = 1; i < this.world.targetXs.length; i++) {
+      var newDistance = this.distance(
+        currX,
+        this.world.targetXs[i],
+        currY,
+        this.world.targetYs[i]
+      );
+
+      if (newDistance < minDistance) {
+        minDistance = newDistance;
+        selectedTargetIndex = i;
+      }
+    }
+
+    return selectedTargetIndex;
   }
 }

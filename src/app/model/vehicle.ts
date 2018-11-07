@@ -3,4 +3,5 @@ export interface Vehicle {
   getY(): number;
   getSize(): number;
   render(): void;
+  update(): void;
 }
