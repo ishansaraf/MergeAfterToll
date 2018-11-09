@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
+import { World } from './model/world'
 
 @Component({
   selector: 'app-root',
@@ -14,17 +15,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const simulationRef = d3.select('#simulation');
-
-    const vehicleRef = simulationRef.append('circle')
-      .attr('r', 50)
-      .attr('fill', 'blue');
+    const world: World = new World(simulationRef)
 
     d3.timer((elapsedTime) => {
-      this.cx++;
-      this.cy++;
-      vehicleRef
-        .attr('cx', this.cx)
-        .attr('cy', this.cy);
+      world.update()
+      world.render()
     });
   }
 }

@@ -14,7 +14,7 @@ export class Tollbooth {
   private targetX: number;
   private targetY: number;
 
-  constructor(world: World
+  constructor(world: World,
               rate: number,
               locktime: number,
               x: number,
@@ -49,7 +49,7 @@ export class Tollbooth {
                                                           this.y,
                                                           this.targetX,
                                                           this.targetY,
-                                                          10))
+                                                          0.5))
   }
 
   private generateInterval: () => number =
