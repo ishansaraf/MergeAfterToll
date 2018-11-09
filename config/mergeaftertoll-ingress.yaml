@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "mergeaftertoll"
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - secretName: mergeaftertoll-certs
+  rules:
+  - host: 294.cjblink1.pro
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mergeaftertoll-web-app
+          servicePort: 80
