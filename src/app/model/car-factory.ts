@@ -1,33 +1,33 @@
 import { Vehicle } from "./vehicle";
 import { Car } from "./car-impl";
-import { World } from "./world";
 import { BasicStrategy } from "./strategies/basicStrategy";
 
 export class CarFactory {
   SIZE_MULTIPLIER: number = 30;
-  private world: World;
+  private ref;
 
-  constructor(world: World) {
-    this.world = world;
+  constructor(ref) {
+    this.ref = ref;
   }
 
   public createCar(
     startX: number,
     startY: number,
+    targetX: number,
+    targetY: number,
     size: number,
-    ref,
     strategy?
   ): Car {
     if (!strategy) {
       strategy = BasicStrategy;
     }
     size = this.SIZE_MULTIPLIER * size;
-    const carRef = this.world.ref
+    const carRef = this.ref
       .append("circle")
       .attr("fill", "blue")
       .attr("cx", startX)
       .attr("cy", startY)
       .attr("r", size);
-    return new Car(startX, startY, size, carRef, new strategy(), this.world);
+    return new Car(startX, startY, targetX, targetY, size, carRef, new strategy());
   }
 }
