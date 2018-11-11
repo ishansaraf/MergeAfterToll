@@ -1,2 +1,2 @@
 FROM nginx:alpine
-COPY dist/mergeaftertoll /usr/share/nginx/html
+COPY dist/MergeAfterToll /usr/share/nginx/html
