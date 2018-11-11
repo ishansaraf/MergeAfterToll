@@ -38,7 +38,9 @@ export class TollboothFactory {
     for(var i: number = 0; i < boothCount; i++) {
       var x = boothStart + (i * this.separation);
       var lane = lanes[Math.floor(i * laneCount / boothCount)];
-      tollbooths.push(this.createTollbooth(x, bottom, lane, top));
+      var tollbooth = this.createTollbooth(x, bottom, lane, top);
+      tollbooth.beginGeneration();
+      tollbooths.push(tollbooth);
     }
   }
 }

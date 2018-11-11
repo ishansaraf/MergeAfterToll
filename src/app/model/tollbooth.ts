@@ -29,18 +29,17 @@ export class Tollbooth {
     this.y = y;
     this.targetX = targetX;
     this.targetY = targetY;
-    this.beginGeneration()
   }
 
   public beginGeneration: () => void =
   () => {
-    setTimeout(this.doGeneration, this.generateInterval())
+    setTimeout(this.doGeneration, this.generateInterval());
   }
 
   private doGeneration: () => void =
   () => {
-    this.produceCar()
-    setTimeout(this.doGeneration, this.generateInterval())
+    this.produceCar();
+    setTimeout(this.doGeneration, this.generateInterval());
   }
 
   private produceCar: () => void =
@@ -49,12 +48,12 @@ export class Tollbooth {
                                                           this.y,
                                                           this.targetX,
                                                           this.targetY,
-                                                          1))
+                                                          1));
   }
 
   private generateInterval: () => number =
   () => {
-    return this.locktime - Math.log(1 - Math.random()) * this.rate
+    return this.locktime - Math.log(1 - Math.random()) * this.rate;
   }
 
 }
