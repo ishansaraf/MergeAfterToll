@@ -37,7 +37,7 @@ export class World {
   }
 
   update(): void {
-    this.vehicles.forEach(vehicle => vehicle.update(this.getNearbyCars(vehicle, 50)));
+    this.vehicles.forEach(vehicle => vehicle.update(this.getNearbyCars(vehicle, 100)));
   }
 
   getNearbyCars(vehicle: Vehicle, radius: number): Vehicle[] {

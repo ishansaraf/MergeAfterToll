@@ -28,22 +28,39 @@ export class AvoidantStrategy extends Strategy {
 
     // Turn toward the lane
     const targetAngle = Math.atan2(targetY - currY, targetX - currX);
-    const angleChange = targetAngle - this.car.direction;
+    var angleChange = targetAngle - this.car.direction;
     if (Math.abs(angleChange) > this.maxTurnRate) {
-      this.car.direction += Math.sign(angleChange) * this.maxTurnRate;
-    } else {
-      this.car.direction += angleChange;
+      angleChange = Math.sign(angleChange) * this.maxTurnRate;
     }
 
     // Change speed
-    const speedChange = this.targetSpeed - this.car.velocity;
+    var speedChange = this.targetSpeed - this.car.velocity;
     if (Math.abs(speedChange) > this.maxAccel) {
-      this.car.velocity += Math.sign(speedChange) * this.maxAccel;
-    } else {
-      this.car.velocity += speedChange;
+      speedChange = Math.sign(speedChange) * this.maxAccel;
     }
 
+    // Correct for collisions
+    var corrected = false;
+    nearbyCars.forEach(otherCar => {
+      if (otherCar.y < this.car.y) {
+        if (speedChange > -this.maxAccel) {
+          speedChange = -this.maxAccel;
+          return;
+        }
+      } else {
+        if (speedChange < this.maxAccel) {
+          speedChange = this.maxAccel;
+          return;
+        }
+      }
+      corrected = true;
+    });
+
+
     // Move the car
+    this.car.velocity += speedChange;
+    this.car.velocity = Math.min(this.car.velocity, this.topSpeed);
+    this.car.direction += angleChange;
     this.car.x += this.car.velocity * Math.cos(this.car.direction);
     this.car.y += this.car.velocity * Math.sin(this.car.direction);
   }
