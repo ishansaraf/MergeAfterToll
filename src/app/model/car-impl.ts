@@ -1,15 +1,7 @@
 import { Vehicle } from "./vehicle";
 import { Strategy } from "./strategy";
 
-export class Car implements Vehicle {
-  x: number;
-  y: number;
-  targetX: number;
-  targetY: number;
-  size: number;
-  ref;
-  strategy: Strategy;
-
+export class Car extends Vehicle {
   constructor(
     x: number,
     y: number,
@@ -17,8 +9,9 @@ export class Car implements Vehicle {
     targetY: number,
     size: number,
     ref,
-    strategy: Strategy,
+    strategy: Strategy
   ) {
+    super();
     this.x = x;
     this.y = y;
     this.targetX = targetX;
@@ -27,26 +20,6 @@ export class Car implements Vehicle {
     this.ref = ref;
     this.strategy = strategy;
     this.strategy.initialize(this);
-  }
-
-  getX(): number {
-    return this.x;
-  }
-
-  getY(): number {
-    return this.y;
-  }
-
-  getTargetX(): number {
-    return this.targetX;
-  }
-
-  getTargetY(): number {
-    return this.targetY;
-  }
-
-  getSize(): number {
-    return this.size;
   }
 
   render(): void {

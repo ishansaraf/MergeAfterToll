@@ -4,10 +4,10 @@ import { Strategy } from "../strategy";
 
 export class BasicStrategy extends Strategy {
   update() {
-    const currX = this.car.getX();
-    const currY = this.car.getY();
-    const targetX = this.car.getTargetX();
-    const targetY = this.car.getTargetY();
+    const currX = this.car.x;
+    const currY = this.car.y;
+    const targetX = this.car.targetX;
+    const targetY = this.car.targetY;
 
     // Update car's x value incrementally in relation to the target
     if (targetX - currX > 0) {
@@ -17,7 +17,6 @@ export class BasicStrategy extends Strategy {
     }
 
     if (targetY - currY > 0) {
-      // TODO: Car already past merging point, unrender
       this.car.ref.remove();
     } else {
       this.car.y = currY - 1;
