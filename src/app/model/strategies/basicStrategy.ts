@@ -3,7 +3,7 @@ import { Vehicle } from "../vehicle";
 import { Strategy } from "../strategy";
 
 export class BasicStrategy extends Strategy {
-  update() {
+  update(nearbyCars: Vehicle[]) {
     const currX = this.car.x;
     const currY = this.car.y;
     const targetX = this.car.targetX;

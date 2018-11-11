@@ -26,7 +26,7 @@ export class Car extends Vehicle {
     this.ref.attr("cx", this.x).attr("cy", this.y);
   }
 
-  update(): void {
-    this.strategy.update();
+  update(nearbyCars: Vehicle[]): void {
+    this.strategy.update(nearbyCars);
   }
 }

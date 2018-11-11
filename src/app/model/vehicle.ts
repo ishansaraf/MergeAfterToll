@@ -9,5 +9,5 @@ export abstract class Vehicle {
   ref;
   strategy: Strategy;
   abstract render(): void;
-  abstract update(): void;
+  abstract update(nearbyCars: Vehicle[]): void;
 }

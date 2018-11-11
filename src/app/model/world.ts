@@ -37,6 +37,15 @@ export class World {
   }
 
   update(): void {
-    this.vehicles.forEach(vehicle => vehicle.update());
+    this.vehicles.forEach(vehicle => vehicle.update(this.getNearbyCars(vehicle, 50)));
   }
+
+  getNearbyCars(vehicle: Vehicle, radius: number): Vehicle[] {
+    return this.vehicles.filter(other => this.distance(vehicle, other) <= radius);
+  }
+
+  distance(first: Vehicle, second: Vehicle): number {
+    return Math.sqrt(Math.pow(first.x - second.x, 2) + Math.pow(first.y - second.y, 2));
+  }
+
 }
