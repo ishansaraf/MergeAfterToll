@@ -1,0 +1,35 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mergeaftertoll-web-app
+  annotations:
+    flux.weave.works/automated: 'true'
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: mergeaftertoll-web-app
+    spec:
+      containers:
+      - name: web-app
+        image: 'cjblink1/mergeaftertoll-web-app:master-ebf559a14d6a30d67400b9c649a6dfea066160ae'
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mergeaftertoll-web-app
+  labels:
+    name: mergeaftertoll-web-app
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: mergeaftertoll-web-app
+  type: ClusterIP
