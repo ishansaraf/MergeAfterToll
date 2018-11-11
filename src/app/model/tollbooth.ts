@@ -29,6 +29,7 @@ export class Tollbooth {
     this.y = y;
     this.targetX = targetX;
     this.targetY = targetY;
+    this.render();
   }
 
   public beginGeneration: () => void =
@@ -56,4 +57,9 @@ export class Tollbooth {
     return this.locktime - Math.log(1 - Math.random()) * this.rate;
   }
 
+  private render(): void {
+    this.world.ref.append("rect")
+      .attr("x", this.x - 15).attr("y", this.y - 15).attr("width", 30)
+      .attr("height", 30).attr("fill", "red").attr("opacity", 0.5)
+  }
 }
