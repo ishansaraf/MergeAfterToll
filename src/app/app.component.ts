@@ -10,9 +10,6 @@ import { World } from './model/world'
 export class AppComponent implements OnInit {
   title = 'MergeAfterToll';
 
-  private cx = 10;
-  private cy = 10;
-
   ngOnInit(): void {
     const simulationRef = d3.select('#simulation');
     const world: World = new World(simulationRef)

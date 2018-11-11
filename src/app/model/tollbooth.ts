@@ -49,7 +49,7 @@ export class Tollbooth {
                                                           this.y,
                                                           this.targetX,
                                                           this.targetY,
-                                                          0.5))
+                                                          1))
   }
 
   private generateInterval: () => number =

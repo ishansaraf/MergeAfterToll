@@ -1,5 +1,4 @@
 import { Vehicle } from "./vehicle";
-import { World } from "./world";
 import { Strategy } from "./strategy";
 
 export class Car implements Vehicle {

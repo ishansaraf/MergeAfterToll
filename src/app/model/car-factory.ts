@@ -3,7 +3,7 @@ import { Car } from "./car-impl";
 import { BasicStrategy } from "./strategies/basicStrategy";
 
 export class CarFactory {
-  SIZE_MULTIPLIER: number = 30;
+  SIZE_MULTIPLIER: number = 15;
   private ref;
 
   constructor(ref) {
