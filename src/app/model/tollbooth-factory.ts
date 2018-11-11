@@ -42,5 +42,13 @@ export class TollboothFactory {
       tollbooth.beginGeneration();
       tollbooths.push(tollbooth);
     }
+
+    this.renderTargets(lanes, top);
+  }
+
+  renderTargets(lanes: number[], offset: number): void {
+    lanes.forEach(lane => this.world.ref.append("rect")
+    .attr("x", lane - 15).attr("y", offset - 15).attr("width", 30)
+    .attr("height", 30).attr("fill", "green").attr("opacity", 0.5));
   }
 }
