@@ -1,2 +1,2 @@
 FROM nginx:alpine
-COPY dist/velociraptor /usr/share/nginx/html
+COPY dist/mergeaftertoll /usr/share/nginx/html
