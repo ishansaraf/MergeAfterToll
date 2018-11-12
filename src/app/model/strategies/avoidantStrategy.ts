@@ -5,6 +5,9 @@ import { Strategy } from "../strategy";
 export class AvoidantStrategy extends Strategy {
   private maxTurnRate = Math.PI / 60;
   private maxAccel = 0.02;
+  private maxDecel = -0.1;
+  private passFactor = 0.01;
+  private brakeFactor = 0.03;
   private topSpeed = 2;
   private targetSpeed = 1.5;
 
@@ -28,32 +31,29 @@ export class AvoidantStrategy extends Strategy {
     }
 
     // Change speed
-    var speedChange = this.targetSpeed - this.car.velocity;
-    if (Math.abs(speedChange) > this.maxAccel) {
-      speedChange = Math.sign(speedChange) * this.maxAccel;
+    var speedChange = 0
+    if (nearbyCars != []) {
+      speedChange = this.targetSpeed - this.car.velocity;
+      speedChange = Math.min(speedChange, this.maxAccel);
+      speedChange = Math.max(speedChange, this.maxDecel);
     }
 
     // Correct for collisions
-    var corrected = false;
     nearbyCars.forEach(otherCar => {
       if (otherCar.y < this.car.y) {
-        if (speedChange > -this.maxAccel) {
-          speedChange = -this.maxAccel;
-          return;
-        }
+        speedChange -= this.brakeFactor;
+        speedChange = Math.max(speedChange, this.maxDecel);
       } else {
-        if (speedChange < this.maxAccel) {
-          speedChange = this.maxAccel;
-          return;
-        }
+        speedChange += this.passFactor;
+        speedChange = Math.min(speedChange, this.maxAccel);
       }
-      corrected = true;
     });
 
 
     // Move the car
     this.car.velocity += speedChange;
     this.car.velocity = Math.min(this.car.velocity, this.topSpeed);
+    this.car.velocity = Math.max(this.car.velocity, 0);
     this.car.direction += angleChange;
     this.car.x += this.car.velocity * Math.cos(this.car.direction);
     this.car.y += this.car.velocity * Math.sin(this.car.direction);
