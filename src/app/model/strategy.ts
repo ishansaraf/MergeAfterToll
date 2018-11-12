@@ -1,13 +1,13 @@
-import { Car } from "./car-impl";
+import { Vehicle } from "./vehicle";
 import { World } from "./world";
 
 export abstract class Strategy {
-  protected car: Car;
+  protected car: Vehicle;
   protected world: World;
 
-  initialize(car: Car): void {
+  initialize(car: Vehicle): void {
     this.car = car;
   }
 
-  abstract update(): void;
+  abstract update(nearbyCars: Vehicle[]): void;
 }

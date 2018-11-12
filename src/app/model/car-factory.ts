@@ -1,6 +1,6 @@
 import { Vehicle } from "./vehicle";
 import { Car } from "./car-impl";
-import { BasicStrategy } from "./strategies/basicStrategy";
+import { AvoidantStrategy } from "./strategies/avoidantStrategy";
 
 export class CarFactory {
   SIZE_MULTIPLIER: number = 15;
@@ -19,7 +19,7 @@ export class CarFactory {
     strategy?
   ): Car {
     if (!strategy) {
-      strategy = BasicStrategy;
+      strategy = AvoidantStrategy;
     }
     size = this.SIZE_MULTIPLIER * size;
     const carRef = this.ref
