@@ -40,6 +40,11 @@ export class World {
     this.vehicles.forEach(vehicle => vehicle.update(this.getNearbyCars(vehicle, 100)));
   }
 
+  cleanup(): void {
+    this.vehicles.filter(v => v.y <= v.targetY).map(v => v.ref.remove());
+    this.vehicles = this.vehicles.filter(v => v.y > v.targetY);
+  }
+
   getNearbyCars(vehicle: Vehicle, radius: number): Vehicle[] {
     return this.vehicles.filter(other => this.distance(vehicle, other) <= radius);
   }

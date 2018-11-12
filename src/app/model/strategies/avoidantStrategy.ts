@@ -20,12 +20,6 @@ export class AvoidantStrategy extends Strategy {
     const targetX = this.car.targetX;
     const targetY = this.car.targetY;
 
-    // Remove car if it is beyond where it should be
-    if (targetY - currY > 0) {
-      this.car.ref.remove();
-      return
-    }
-
     // Turn toward the lane
     const targetAngle = Math.atan2(targetY - currY, targetX - currX);
     var angleChange = targetAngle - this.car.direction;

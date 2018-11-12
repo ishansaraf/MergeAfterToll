@@ -15,11 +15,6 @@ export class BasicStrategy extends Strategy {
     } else if (targetX - currX < 0) {
       this.car.x = currX - 1;
     }
-
-    if (targetY - currY > 0) {
-      this.car.ref.remove();
-    } else {
-      this.car.y = currY - 1;
-    }
+    this.car.y = currY - 1;
   }
 }
