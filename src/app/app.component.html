@@ -1,13 +1,28 @@
 <div id="app">
-  <svg id="simulation">
-  <!-- <div id="controls">
+  <svg id="simulation"></svg>
+  <div id="controls">
     <div id="data">
         <span style="font-weight: bold">Avg Temp:</span> {{ this.avgTemp }} <span style="font-weight: bold">Std Dev:</span> {{ this.stddevTemp }}
     </div>
-   <mat-form-field>
-      <input matInput type="number" step="0.1" placeholder="Source Flow Speed" [(ngModel)]="sourceFlowSpeed" (input)="handleSourceFlowSpeedChange()" >
+    <mat-form-field>
+      <input matInput type="number" step="1" placeholder="Booths" [(ngModel)]="numBooths">
     </mat-form-field>
     <mat-form-field>
+      <input matInput type="number" step="1" placeholder="Lanes" [(ngModel)]="numLanes">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" step="10" placeholder="Poisson Rate" [(ngModel)]="poissonRate">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" step="1" placeholder="Lock Time" [(ngModel)]="lockTime">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" step="1" placeholder="Tollbooth Spacing" [(ngModel)]="tollboothSpacing">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" step="10" placeholder="Merge Distance" [(ngModel)]="mergeDistance">
+    </mat-form-field>
+    <!-- <mat-form-field>
       <input matInput type="number" step="5" placeholder="Source Temperature" [(ngModel)]="sourceTemp" (input)="handleSourceTempChange()" >
     </mat-form-field>
     <mat-form-field>
@@ -21,10 +36,9 @@
     </mat-form-field>
     <mat-form-field>
       <input matInput type="number" step="5" placeholder="Air Temperature" [(ngModel)]="airTemp" (input)="handleAirTempChange()">
-    </mat-form-field>
+    </mat-form-field> -->
     <span id="space"></span>
-    <button mat-raised-button color="primary" (click)="handleExplain()">Explain</button>
+    <!-- <button mat-raised-button color="primary" (click)="handleExplain()">Explain</button> -->
     <button mat-raised-button color="primary" (click)="handleReset()"><mat-icon>refresh</mat-icon></button>
-  </div> -->
-  </svg>
+  </div>
 </div>

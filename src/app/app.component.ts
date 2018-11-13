@@ -9,6 +9,13 @@ import { World } from './model/world'
 })
 export class AppComponent implements OnInit {
   title = 'MergeAfterToll';
+  numBooths = 7;
+  numLanes = 3;
+  poissonRate = 3000;
+  lockTime = 500;
+  tollboothSpacing = 100;
+  mergeDistance = 500;
+
 
   ngOnInit(): void {
     const simulationRef = d3.select('#simulation');
@@ -18,5 +25,9 @@ export class AppComponent implements OnInit {
       world.update()
       world.render()
     });
+  }
+
+  handleReset() {
+    // TODO: Reset the world with current parameters (poissonRate, etc.) specified in the UI
   }
 }
