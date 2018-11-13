@@ -1,23 +1,14 @@
 import { Vehicle } from "./vehicle";
-import { CarFactory } from "./car-factory";
-import { TollboothFactory } from "./tollbooth-factory";
 import { Tollbooth } from "./tollbooth";
 
 export class World {
   public ref;
-  public carFactory: CarFactory;
-  public tollboothFactory: TollboothFactory;
   public vehicles: Vehicle[] = [];
-  public targetXs: number[] = [];
-  public targetYs: number[] = [];
   public tollbooths: Tollbooth[] = [];
   public targetRefs: any[] = [];
 
   constructor(ref) {
     this.ref = ref;
-    this.carFactory = new CarFactory(ref);
-    this.tollboothFactory = new TollboothFactory(this);
-    this.tollboothFactory.createTollboothRows(8, 3);
   }
 
   addVehicle(vehicle: Vehicle): void {
@@ -37,7 +28,9 @@ export class World {
   }
 
   update(): void {
-    this.vehicles.forEach(vehicle => vehicle.update(this.getNearbyCars(vehicle, 100)));
+    this.vehicles.forEach(vehicle =>
+      vehicle.update(this.getNearbyCars(vehicle, 100))
+    );
   }
 
   cleanup(): void {
@@ -46,11 +39,26 @@ export class World {
   }
 
   getNearbyCars(vehicle: Vehicle, radius: number): Vehicle[] {
-    return this.vehicles.filter(other => this.distance(vehicle, other) <= radius);
+    return this.vehicles.filter(
+      other => this.distance(vehicle, other) <= radius
+    );
   }
 
   distance(first: Vehicle, second: Vehicle): number {
-    return Math.sqrt(Math.pow(first.x - second.x, 2) + Math.pow(first.y - second.y, 2));
+    return Math.sqrt(
+      Math.pow(first.x - second.x, 2) + Math.pow(first.y - second.y, 2)
+    );
   }
 
+  reset(): void {
+    this.vehicles.forEach(vehicle => vehicle.ref.remove());
+    this.tollbooths.forEach(tollbooth => {
+      tollbooth.ref.remove();
+      tollbooth.active = false;
+    });
+    this.targetRefs.forEach(ref => ref.remove());
+    this.vehicles = [];
+    this.tollbooths = [];
+    this.targetRefs = [];
+  }
 }
