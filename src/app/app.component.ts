@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
       this.world.render();
       this.world.cleanup();
 
-      // TODO: this.avgOutputFlowRate = world.calculateAvgOutputFlowRate();
-      // TODO: this.avgExitSpeed = world.calculateAvgExitSpeed();
+      this.avgOutputFlowRate = this.world.calculateAvgOutputFlowRate();
+      this.avgExitSpeed = this.world.calculateAvgExitSpeed();
     });
   }
 

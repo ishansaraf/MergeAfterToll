@@ -6,6 +6,8 @@ export class World {
   public vehicles: Vehicle[] = [];
   public tollbooths: Tollbooth[] = [];
   public targetRefs: any[] = [];
+  private exitSpeeds: number[] = [];
+  private cacheSize = 15;
 
   constructor(ref) {
     this.ref = ref;
@@ -35,6 +37,10 @@ export class World {
 
   cleanup(): void {
     this.vehicles.filter(v => v.y <= v.targetY).map(v => v.ref.remove());
+    this.exitSpeeds = this.exitSpeeds.concat(this.vehicles.filter(v => v.y <= v.targetY).map(v => v.velocity));
+    if (this.exitSpeeds.length >= this.cacheSize) {
+      this.exitSpeeds.splice(0, this.exitSpeeds.length - this.cacheSize);
+    }
     this.vehicles = this.vehicles.filter(v => v.y > v.targetY);
   }
 
@@ -61,4 +67,14 @@ export class World {
     this.tollbooths = [];
     this.targetRefs = [];
   }
+
+  calculateAvgExitSpeed() {
+    return this.exitSpeeds.reduce((acc, val) => acc + val, 0) / this.exitSpeeds.length;
+  }
+
+  calculateAvgOutputFlowRate() {
+    return 0;
+  }
+
+
 }
