@@ -5,12 +5,21 @@ export class TollboothFactory {
   private world: World;
   private locktime: number;
   private rate: number;
-  private separation = 100;
+  private separation: number;
+  private mergeDistance: number;
 
-  constructor(world: World) {
+  constructor(
+    world: World,
+    locktime: number,
+    rate: number,
+    separation: number,
+    mergeDistance: number
+  ) {
     this.world = world;
-    this.locktime = 500;
-    this.rate = 3000;
+    this.locktime = locktime;
+    this.rate = rate;
+    this.separation = separation;
+    this.mergeDistance = mergeDistance;
   }
 
   createTollbooth(
@@ -40,13 +49,13 @@ export class TollboothFactory {
   }
 
   createTollboothRows(boothCount: number, laneCount: number): void {
-    const top = 100;
     const bottom = this.world.ref.node().getBoundingClientRect().height - 100;
     const center = this.world.ref.node().getBoundingClientRect().width / 2;
     const boothWidth = this.separation * boothCount;
     const boothStart = center - boothWidth / 2;
     const laneWidth = this.separation * laneCount;
     const laneStart = center - laneWidth / 2;
+    const distanceFromTop = bottom - this.mergeDistance;
 
     var lanes: number[] = [];
     for (var i: number = 0; i < laneCount; i++) {
@@ -56,12 +65,12 @@ export class TollboothFactory {
     for (var i: number = 0; i < boothCount; i++) {
       var x = boothStart + i * this.separation;
       var lane = lanes[Math.floor((i * laneCount) / boothCount)];
-      var tollbooth = this.createTollbooth(x, bottom, lane, top);
+      var tollbooth = this.createTollbooth(x, bottom, lane, distanceFromTop);
       tollbooth.beginGeneration();
       this.world.addTollBooth(tollbooth);
     }
 
-    this.createTargets(lanes, top);
+    this.createTargets(lanes, distanceFromTop);
   }
 
   createTargets(lanes: number[], offset: number): void {

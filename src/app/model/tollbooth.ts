@@ -14,6 +14,8 @@ export class Tollbooth {
   private targetX: number;
   private targetY: number;
   public ref;
+  public active;
+  public carFactory: CarFactory;
 
   constructor(
     world: World,
@@ -33,6 +35,8 @@ export class Tollbooth {
     this.targetX = targetX;
     this.targetY = targetY;
     this.ref = ref;
+    this.active = true;
+    this.carFactory = new CarFactory(this.world);
   }
 
   public beginGeneration: () => void = () => {
@@ -40,19 +44,15 @@ export class Tollbooth {
   };
 
   private doGeneration: () => void = () => {
-    this.produceCar();
-    setTimeout(this.doGeneration, this.generateInterval());
+    if (this.active) {
+      this.produceCar();
+      setTimeout(this.doGeneration, this.generateInterval());
+    }
   };
 
   private produceCar: () => void = () => {
     this.world.addVehicle(
-      this.world.carFactory.createCar(
-        this.x,
-        this.y,
-        this.targetX,
-        this.targetY,
-        1
-      )
+      this.carFactory.createCar(this.x, this.y, this.targetX, this.targetY, 1)
     );
   };
 

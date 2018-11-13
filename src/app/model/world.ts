@@ -1,23 +1,14 @@
 import { Vehicle } from "./vehicle";
-import { CarFactory } from "./car-factory";
-import { TollboothFactory } from "./tollbooth-factory";
 import { Tollbooth } from "./tollbooth";
 
 export class World {
   public ref;
-  public carFactory: CarFactory;
-  public tollboothFactory: TollboothFactory;
   public vehicles: Vehicle[] = [];
-  public targetXs: number[] = [];
-  public targetYs: number[] = [];
   public tollbooths: Tollbooth[] = [];
   public targetRefs: any[] = [];
 
-  constructor(ref, booths: number = 8, lanes: number = 3) {
+  constructor(ref) {
     this.ref = ref;
-    this.carFactory = new CarFactory(ref);
-    this.tollboothFactory = new TollboothFactory(this);
-    this.tollboothFactory.createTollboothRows(booths, lanes);
   }
 
   addVehicle(vehicle: Vehicle): void {
@@ -60,17 +51,14 @@ export class World {
   }
 
   reset(): void {
-    // this.ref = ref;
     this.vehicles.forEach(vehicle => vehicle.ref.remove());
-    this.tollbooths.forEach(tollbooth => tollbooth.ref.remove());
+    this.tollbooths.forEach(tollbooth => {
+      tollbooth.ref.remove();
+      tollbooth.active = false;
+    });
     this.targetRefs.forEach(ref => ref.remove());
     this.vehicles = [];
     this.tollbooths = [];
     this.targetRefs = [];
-    this.targetXs = [];
-    this.targetYs = [];
-    this.carFactory = new CarFactory(this);
-    this.tollboothFactory = new TollboothFactory(this);
-    // this.tollboothFactory.createTollboothRows(booths, lanes);
   }
 }
