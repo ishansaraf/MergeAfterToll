@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: web-app
-        image: 'cjblink1/mergeaftertoll-web-app:controls-5044226ada5c2c2fa875dfd03213b9fc85774841'
+        image: 'cjblink1/mergeaftertoll-web-app:master-cd6bc0fa57ce68f79b0492b1b08b41a05102d258'
         ports:
         - containerPort: 80
 ---
