@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import * as d3 from "d3";
 import { World } from "./model/world";
+import { TollboothFactory } from "./model/tollbooth-factory";
 
 @Component({
   selector: "app-root",
@@ -14,15 +15,16 @@ export class AppComponent implements OnInit {
   poissonRate = 3000;
   lockTime = 500;
   tollboothSpacing = 100;
-  mergeDistance = 500;
+  mergeDistance = 625;
   avgOutputFlowRate = 0;
   avgExitSpeed = 0;
   world: World;
   simulationRef;
+  tollboothFactory: TollboothFactory;
 
   ngOnInit(): void {
     this.simulationRef = d3.select("#simulation");
-    this.world = new World(this.simulationRef);
+    this.handleReset();
 
     d3.timer(elapsedTime => {
       this.world.update();
@@ -35,8 +37,19 @@ export class AppComponent implements OnInit {
   }
 
   handleReset() {
-    console.log("Resetting the world...");
-    this.world.reset();
-    this.world = new World(this.simulationRef, this.numBooths, this.numLanes);
+    if (this.world) {
+      console.log("Resetting the world...");
+      this.world.reset();
+    }
+
+    this.world = new World(this.simulationRef);
+    this.tollboothFactory = new TollboothFactory(
+      this.world,
+      this.lockTime,
+      this.poissonRate,
+      this.tollboothSpacing,
+      this.mergeDistance
+    );
+    this.tollboothFactory.createTollboothRows(this.numBooths, this.numLanes);
   }
 }
