@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
     d3.timer((elapsedTime) => {
       world.update()
       world.render()
+      world.cleanup()
     });
   }
 
